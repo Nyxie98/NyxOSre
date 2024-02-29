@@ -1,8 +1,17 @@
+SRC=src
 BOOT=src/boot
 KERNEL=src/kernel
+DRIVERS=src/drivers
 OUT=out
 
-nasm $BOOT/boot_sect.s -f bin -o $OUT/boot_sect.bin
+C_SOURCES=($KERNEL/*.c $DRIVERS/*.c)
+C_HEADERS=($KERNEL/*.h $DRIVERS/*.h)
+S_SOURCES=($BOOT/*.s)
+
+# echo ${C_SOURCES[@]} ${C_HEADERS[@]} ${S_SOURCES[@]}
+
+echo Assembling Boot Sector
+nasm $SRC/boot_sect.s -f bin -o $OUT/boot_sect.bin
 # qemu-system-i386 -fda out/boot_sect.bin
 
 gcc -ffreestanding -c $KERNEL/kernel.c -o $OUT/kernel.o
